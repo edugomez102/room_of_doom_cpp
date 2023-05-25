@@ -10,11 +10,7 @@ namespace uage {
 
   struct Sprite{
 
-    Sprite(Dimensions2D dim, uint32_t color)
-      : dim_{dim}
-    {
-      std::fill(data_.begin(), data_.end(), color);
-    }
+    Sprite(Dimensions2D dim, uint32_t color);
 
     // TODO
     // Sprite& load_from_file(std::filesystem::path p);

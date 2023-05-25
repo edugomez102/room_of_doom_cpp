@@ -47,3 +47,5 @@ $(OBJSUBDIRS):
 
 clean:
 	rm -rf obj
+
+recode: clean $(APP)
