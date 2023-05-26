@@ -26,16 +26,14 @@ namespace uage {
 
   void ScreenBuffer::drawSprite(const Sprite& sprite, const Vec2D& position)
   {
-    auto spdim = sprite.dim();
-    // auto spdim = uage::Dimensions2D{16, 24}; // w h
+    if(position.x > dim_.w || position.y > dim_.h) return; // TODO
 
+    auto spdim = sprite.dim();
     uint32_t* pscr = data_.data() + position.x + (position.y * dim_.w);
     const uint32_t* psp  = sprite.data();
 
     for (uint32_t i = 0; i < spdim.w; i++) {
       for (uint32_t j = 0; j < spdim.h; j++) {
-
-        // *pscr = 0xFFFF0000;
         *pscr = *psp;
         ++pscr;
         ++psp;

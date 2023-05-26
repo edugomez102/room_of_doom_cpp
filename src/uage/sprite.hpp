@@ -10,6 +10,7 @@ namespace uage {
 
   struct Sprite{
 
+    Sprite() = default;
     Sprite(Dimensions2D dim, uint32_t color);
 
     // TODO
