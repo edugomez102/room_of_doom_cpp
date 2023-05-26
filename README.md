@@ -3,11 +3,9 @@
 
 based on video lessons: https://www.youtube.com/playlist?list=PLmxqg54iaXritRT2feMhorGIbSG-Wi4JH
 
-## LICENSE
-
-using libraries
+## Libraries
 
 - tiniyPTC
 - picoPNG
-- boost ut
+- boost ut: https://github.com/boost-ext/ut
 
