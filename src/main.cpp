@@ -5,6 +5,7 @@ extern "C" {
 #include "uage/screenbuffer.hpp"
 #include <cstdint>
 #include <optional>
+#include <cmath>
 
 #define DISABLE_COPY_AND_ASSIGN(Class) \
 Class(const Class&)            = delete; \
@@ -21,11 +22,13 @@ namespace rod {
 
   struct RenderComponent {
     uage::Sprite sprite{};
+    uage::Vec2D pos{};
   };
 
+
   struct PhysicsComponent {
-    uage::Vec2D pos{};
-    uage::Vec2D vel{};
+    uage::Vec2Df pos{};
+    uage::Vec2Df vel{};
   };
 
   struct Entity{
@@ -75,6 +78,20 @@ namespace rod {
     }
   };
 
+  struct PreRenderSystem{
+    void update(EntityManager& EM) {
+      for (Entity& e : EM) {
+        if(e.physics && e.render) {
+          auto &phy = (*e.physics).pos;
+          auto &ren = (*e.render).pos;
+
+          ren.x = int32_t(std::round(phy.x));
+          ren.y = int32_t(std::round(phy.y));
+        }
+      }
+    }
+  };
+
   struct RenderSystem {
     explicit RenderSystem(const uint32_t w, const uint32_t h)
       : screen_{w, h}
@@ -90,8 +107,8 @@ namespace rod {
     void update(EntityManager& EM) {
       screen_.fill(0);
       for (Entity& e : EM) {
-        if(e.render && e.physics){
-          screen_.drawSprite(e.render->sprite, e.physics->pos);
+        if(e.render){
+          screen_.drawSprite(e.render->sprite, e.render->pos);
         }
       }
       ptc_update(screen_.data());
@@ -103,15 +120,15 @@ namespace rod {
   };
 }
 
-
 int main()
 {
   rod::EntityManager EM{10};
   rod::PhysicsSystem PhySys{};
   rod::RenderSystem  RenSys{w, h};
+  rod::PreRenderSystem PreRenSys{};
 
   auto& e1 = EM.createEntity();
-  e1.physics = rod::PhysicsComponent{.pos{10, 10}, .vel{0, 1}};
+  e1.physics = rod::PhysicsComponent{.pos{10, 10}, .vel{0.f, 0.01f}};
   e1.render  = rod::RenderComponent{.sprite{{4, 4}, 0x000000FF}};
 
   auto& e2 = EM.createEntity();
@@ -119,12 +136,16 @@ int main()
   e2.render  = rod::RenderComponent{.sprite{{8, 8}, 0x000000FF}};
 
   auto& e3 = EM.createEntity();
-  e3.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{1, 0}};
+  e3.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{0.1f, 0}};
   e3.render  = rod::RenderComponent{.sprite{{8, 8}, 0x00FF00FF}};
+
 
   while( ! ptc_process_events())
   {
+    // TODO: sysman CRTP
+
     PhySys.update(EM);
+    PreRenSys.update(EM);
     RenSys.update(EM);
   }
 

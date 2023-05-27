@@ -12,7 +12,9 @@ namespace uage {
     Vec2D_t& operator-=(const Vec2D_t rhs) { x -= rhs.x; y -= rhs.y; return *this; }
   };
 
-  using Vec2D = Vec2D_t<uint32_t>;
+  // default
+  using Vec2D  = Vec2D_t<uint32_t>;
+  using Vec2Df = Vec2D_t<float>;
 
   struct Dimensions2D {
     uint32_t w{}, h{};
@@ -25,6 +27,8 @@ namespace uage {
   struct Rect2D {
     Vec2D pos{};
     Dimensions2D dim{};
+
+    // bool operator<=>(const Rect2D&) const noexcept = default;
 
   };
 

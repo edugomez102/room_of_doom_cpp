@@ -1,10 +1,18 @@
 
+#
 # Makefile to generate main game executable and run_test executable
+# 
+#
+#
+
+###############################################################################
+# Variable macros
+###############################################################################
 
 APP      := game
 TEST_APP := run_tests
 
-CCFLAGS := -g -Wall -Wextra -pedantic -std=c++20 
+CCFLAGS := -std=c++20 
 CFLAGS  := $(CCFLAGS)
 CC      := g++
 C       := gcc
@@ -27,12 +35,27 @@ TEST_OBJS     := $(patsubst $(TEST_SRC)/%.cpp,$(TEST_OBJ)/%.o,$(TEST_ALLCPPS))
 
 TEST_SRC_CPPOBJS   := $(filter-out $(OBJ)/main.o,$(ALLCPPSOBJS))
 
-
 SUBDIRS      := $(shell find $(SRC)/ -type d)
 OBJSUBDIRS   := $(patsubst $(SRC)%,$(OBJ)%,$(SUBDIRS))
 
+###############################################################################
+# Config
+###############################################################################
+
+ifeq ($(RELEASE),1)
+    CCFLAGS += -O2
+else
+		CCFLAGS += -g -Wall -Wextra -Wpedantic -Wconversion
+endif
+CFLAGS  := $(CCFLAGS)
+
+
+###############################################################################
 
 .PHONY: dir
+
+
+all: $(APP) test
 
 # generate folders for *.o files with same structure of src first
 # then, complie main file
@@ -52,7 +75,10 @@ $(TEST_OBJ)/%.o: $(TEST_SRC)/%.cpp
 
 $(TEST_APP) : $(OBJSUBDIRS) $(TEST_OBJS)
 	$(CC) -o $(TEST_APP) $(TEST_OBJS) $(TEST_SRC_CPPOBJS) $(ALLCSOBJS) $(LIBS)
+	./$(TEST_APP)
 
+
+# testing variable contents
 dir:
 	$(info $(SUBDIRS))
 	$(info $(OBJSUBDIRS))
@@ -72,7 +98,7 @@ $(OBJSUBDIRS):
 
 clean:
 	rm -rf obj
-	rm $(APP)
-	rm $(TEST_APP)
+	rm -f $(APP)
+	rm -f $(TEST_APP)
 
 recode: clean $(APP)
