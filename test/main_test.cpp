@@ -1,4 +1,5 @@
 #include "ut.hpp"
+#include "uage/math_types.hpp"
 
 int add(int a, int b) {
     return a + b;

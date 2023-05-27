@@ -20,6 +20,7 @@ MKDIR   := mkdir -p
 SRC     := src
 OBJ     := obj
 LIBS    := -lX11 
+INCUDE  := -Isrc/lib
 
 TEST_SRC    := test
 TEST_OBJ    := $(OBJ)/test
@@ -59,16 +60,17 @@ all: $(APP) test
 
 # generate folders for *.o files with same structure of src first
 # then, complie main file
+
 $(APP) : $(OBJSUBDIRS) $(ALLCSOBJS) $(ALLCPPSOBJS)
-	$(CC) -o $(APP) $(ALLCPPSOBJS) $(ALLCSOBJS) $(LIBS)
+	$(CC) -o $(APP) $(ALLCPPSOBJS) $(ALLCSOBJS) $(LIBS) -Isrc/lib
 
 test: $(TEST_APP)
 
 $(OBJ)/%.o : $(SRC)/%.c
-	$(CC) -o $@ -c $^ $(CFLAGS)
+	$(CC) -o $@ -c $^ $(CFLAGS) -Isrc/lib
 
 $(OBJ)/%.o : $(SRC)/%.cpp
-	$(CC) -o $@ -c $^ $(CCFLAGS)
+	$(CC) -o $@ -c $^ $(CCFLAGS) -Isrc/lib
 
 $(TEST_OBJ)/%.o: $(TEST_SRC)/%.cpp
 	$(CC) -o $@ -c $^ $(CCFLAGS) -Isrc
@@ -77,6 +79,9 @@ $(TEST_APP) : $(OBJSUBDIRS) $(TEST_OBJS)
 	$(CC) -o $(TEST_APP) $(TEST_OBJS) $(TEST_SRC_CPPOBJS) $(ALLCSOBJS) $(LIBS)
 	./$(TEST_APP)
 
+# build and run the game
+gamer: $(APP)
+	./$(APP)
 
 # testing variable contents
 dir:
