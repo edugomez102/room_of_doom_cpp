@@ -4,6 +4,13 @@
 
 #include <cstdint>
 
+uint32_t spritea[4 * 4] = {
+  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+};
+
 namespace uage {
 
   ScreenBuffer::ScreenBuffer(const uint32_t w, const uint32_t h)
@@ -11,18 +18,16 @@ namespace uage {
   { 
   }
 
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
   void ScreenBuffer::fill(const uint32_t hexColor)
   {
     std::fill(data_.begin(), data_.end(), hexColor);
   }
 
-  uint32_t spritea[4 * 4] = {
-    0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
-    0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
-    0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
-    0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
-  };
-
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
   void ScreenBuffer::drawSprite(const Sprite& sprite, const Vec2D& position)
   {

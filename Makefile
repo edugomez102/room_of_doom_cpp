@@ -20,7 +20,7 @@ MKDIR   := mkdir -p
 SRC     := src
 OBJ     := obj
 LIBS    := -lX11 
-INCUDE  := -Isrc/lib
+INCLUDE  := -Isrc -Isrc/lib
 
 TEST_SRC    := test
 TEST_OBJ    := $(OBJ)/test
@@ -62,15 +62,15 @@ all: $(APP) test
 # then, complie main file
 
 $(APP) : $(OBJSUBDIRS) $(ALLCSOBJS) $(ALLCPPSOBJS)
-	$(CC) -o $(APP) $(ALLCPPSOBJS) $(ALLCSOBJS) $(LIBS) -Isrc/lib
+	$(CC) -o $(APP) $(ALLCPPSOBJS) $(ALLCSOBJS) $(LIBS) $(INCLUDE)
 
 test: $(TEST_APP)
 
 $(OBJ)/%.o : $(SRC)/%.c
-	$(CC) -o $@ -c $^ $(CFLAGS) -Isrc/lib
+	$(CC) -o $@ -c $^ $(CFLAGS) $(INCLUDE)
 
 $(OBJ)/%.o : $(SRC)/%.cpp
-	$(CC) -o $@ -c $^ $(CCFLAGS) -Isrc/lib
+	$(CC) -o $@ -c $^ $(CCFLAGS) $(INCLUDE)
 
 $(TEST_OBJ)/%.o: $(TEST_SRC)/%.cpp
 	$(CC) -o $@ -c $^ $(CCFLAGS) -Isrc
