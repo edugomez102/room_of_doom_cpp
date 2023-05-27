@@ -96,8 +96,8 @@ dir_test:
 
 # TODO: tries to create ALL the dirs even if some exist
 $(OBJSUBDIRS): 
-	$(MKDIR) $@
-	$(MKDIR) obj/test
+	@$(MKDIR) $@
+	@$(MKDIR) obj/test
 
 clean:
 	rm -rf obj
