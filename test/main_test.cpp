@@ -12,7 +12,7 @@ int main() {
     auto d = uage::Dimensions2D{2, 2};
     expect(d.size() == 4);
     d.h = 10;
-    expect(d.size() == 0);
+    expect(d.size() == 20);
   };
 
 }
