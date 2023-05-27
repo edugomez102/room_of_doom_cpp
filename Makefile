@@ -1,8 +1,6 @@
-
 #
 # Makefile to generate main game executable and run_test executable
 # 
-#
 #
 
 ###############################################################################
