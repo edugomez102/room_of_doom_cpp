@@ -1,3 +1,4 @@
+#include "cmp/behaviour.hpp"
 extern "C" {
 #include <tinyPTC/tinyptc.h>
 }
@@ -15,6 +16,7 @@ extern "C" {
 
 #include <sys/physiscssystem.hpp>
 #include <sys/rendersystem.hpp>
+#include <sys/behavioursystem.hpp>
 
 #include <uage/clock.hpp>
 
@@ -27,12 +29,16 @@ int main()
   rod::PhysicsSystem PhySys{};
   rod::RenderSystem  RenSys{w, h};
   rod::PreRenderSystem PreRenSys{};
+  rod::BehaviourSystem BehSys{};
 
   uage::Clock clock;
 
   auto& e1 = EM.createEntity();
-  e1.physics = rod::PhysicsComponent{.pos{10, 10}, .vel{0.f, 1.f}};
+  e1.physics = rod::PhysicsComponent{.pos{10, 40}, .vel{0.f, 5.f}};
   e1.render  = rod::RenderComponent{.sprite{{4, 4}, 0x000000FF}};
+  e1.beh_cmp = rod::BehaviourComponent{
+    .behaviour{std::make_unique<rod::BehaviourChangeVY>()
+  }};
 
   auto& e2 = EM.createEntity();
   e2.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{0, 0}};
@@ -47,6 +53,7 @@ int main()
     clock.new_frame();
 
     // TODO: sysman CRTP
+    BehSys.update(EM);
     PhySys.update(EM);
     PreRenSys.update(EM);
     RenSys.update(EM);
