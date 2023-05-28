@@ -7,7 +7,7 @@
 
 namespace ut = boost::ut;
 
-ut::suite<"physics system"> pytest = [] 
+ut::suite<"physics system"> phy_test = [] 
 {
   using namespace boost::ut;
   using namespace boost::ut::literals;
