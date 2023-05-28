@@ -1,4 +1,5 @@
 #include "clock.hpp"
+#include <cstdio>
 
 namespace uage {
 
