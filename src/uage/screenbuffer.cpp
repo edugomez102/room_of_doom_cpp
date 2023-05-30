@@ -4,11 +4,19 @@
 
 #include <cstdint>
 
-uint32_t spritea[4 * 4] = {
-  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
-  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
-  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
-  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+uint32_t spritea[5 * 4] = {
+  // 0x00FF0000, 0x0000FF00
+
+  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000, 0x000000FF,
+  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000, 0x000000FF,
+  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000, 0x000000FF,
+  0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000, 0x000000FF,
+
+  // 0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+  // 0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+  // 0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+  // 0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF00FF,
+
 };
 
 namespace uage {
@@ -34,16 +42,16 @@ namespace uage {
     if(position.x > dim_.w || position.y > dim_.h) return; // TODO
 
     auto spdim = sprite.dim();
+    const uint32_t* psp = sprite.data();
     uint32_t* pscr = data_.data() + position.x + (position.y * dim_.w);
-    const uint32_t* psp  = sprite.data();
 
-    for (uint32_t i = 0; i < spdim.w; i++) {
-      for (uint32_t j = 0; j < spdim.h; j++) {
+    for (uint32_t i = 0; i < spdim.h; i++) {
+      for (uint32_t j = 0; j < spdim.w; j++) {
         *pscr = *psp;
         ++pscr;
         ++psp;
       }
-      pscr += dim_.w - (spdim.w) + (spdim.w - spdim.h);
+      pscr += dim_.w - (spdim.h) + (spdim.h - spdim.w);
     }
   }
 

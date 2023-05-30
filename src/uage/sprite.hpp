@@ -14,7 +14,7 @@ namespace uage {
     Sprite(Dimensions2D dim, uint32_t color);
 
     // TODO
-    // Sprite& load_from_file(std::filesystem::path p);
+    void load_from_file(std::filesystem::path p);
     // Sprite new_subsprite(Rect2D const& rect);
 
     Dimensions2D const dim() const { return dim_; }
