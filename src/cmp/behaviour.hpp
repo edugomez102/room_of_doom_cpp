@@ -8,6 +8,7 @@ namespace rod {
 
   struct Behaviour{
     virtual void run(rod::Entity& e) = 0;
+    virtual ~Behaviour() = default;
   };
 
   struct BehaviourBounce: Behaviour{
@@ -23,7 +24,7 @@ namespace rod {
   };
 
   struct BehaviourComponent{
-    std::unique_ptr<Behaviour> behaviour{nullptr};
+    std::unique_ptr<Behaviour> behaviour{};
   };
 }
 
