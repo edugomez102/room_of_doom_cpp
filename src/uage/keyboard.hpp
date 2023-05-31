@@ -2,6 +2,7 @@
 
 #include <X11/X.h>
 #include <X11/keysym.h>
+#include <uage/macros.h>
 
 #include <unordered_map>
 #include <optional>

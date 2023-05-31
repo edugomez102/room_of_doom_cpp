@@ -1,4 +1,4 @@
-
+#pragma once
 
 #define DISABLE_COPY_AND_ASSIGN(Class) \
 Class(const Class&)            = delete; \

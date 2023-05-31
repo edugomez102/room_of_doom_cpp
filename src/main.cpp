@@ -16,6 +16,7 @@ extern "C" {
 #include <sys/physiscssystem.hpp>
 #include <sys/rendersystem.hpp>
 #include <sys/behavioursystem.hpp>
+#include <sys/inputsystem.hpp>
 
 #include <uage/clock.hpp>
 
@@ -29,39 +30,37 @@ int main()
   rod::RenderSystem  RenSys{w, h};
   rod::PreRenderSystem PreRenSys{};
   rod::BehaviourSystem BehSys{};
+  rod::InputSystem InpSys{};
 
   uage::Clock clock;
 
-  // auto& e1 = EM.createEntity();
-  // e1.physics = rod::PhysicsComponent{.pos{10, 40}, .vel{0.f, 5.f}};
-  // e1.render  = rod::RenderComponent{.sprite{{4, 4}, 0x000000FF}};
-  // e1.beh_cmp = rod::BehaviourComponent{
-  //   .behaviour{std::make_unique<rod::BehaviourChangeVY>()
-  // }};
+  auto& e1 = EM.createEntity();
+  e1.physics = rod::PhysicsComponent{.pos{10, 40}, .vel{0.f, 5.f}};
+  e1.render  = rod::RenderComponent{.sprite{{16, 8}, 0x000000FF}};
+  e1.beh_cmp = rod::BehaviourComponent{
+    .behaviour{std::make_unique<rod::BehaviourChangeVY>()
+  }};
 
   auto& e2 = EM.createEntity();
-  e2.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{1, 0}};
+  e2.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{0, 0}};
+  e2.input = rod::InputComponent{};
   auto s = uage::Sprite{};
   s.load_from_file("assets/img/image3.png");
-
   e2.render  = rod::RenderComponent{.sprite{s}};
-  // e1.beh_cmp = rod::BehaviourComponent{
-  //   .behaviour{std::make_unique<rod::BehaviourChangeVY>()
-  // }};
-
-  // auto& e3 = EM.createEntity();
-  // e3.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{1.f, 0}};
-  // e3.render  = rod::RenderComponent{.sprite{{8, 8}, 0x00FF00FF}};
 
   while( ! ptc_process_events())
   {
     clock.new_frame();
 
     // TODO: sysman CRTP
-    BehSys.update(EM);
-    PhySys.update(EM);
     PreRenSys.update(EM);
     RenSys.update(EM);
+
+    InpSys.update(EM);
+    BehSys.update(EM);
+    PhySys.update(EM);
+
+
 
     while(clock.is_waiting());
     clock.update_frames();

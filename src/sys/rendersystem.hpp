@@ -9,8 +9,6 @@ extern "C" {
 
 namespace rod {
 
-  // struct EntityManager;
-
   struct PreRenderSystem{
     void update(EntityManager& EM);
   };

@@ -1,5 +1,6 @@
 
 obj/
+compile_commands.json
 *gch
 game
 run_tests

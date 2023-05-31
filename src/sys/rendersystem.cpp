@@ -4,20 +4,8 @@
 
 namespace rod {
 
-  void
-  PreRenderSystem::update(EntityManager& EM) {
-    for (Entity& e : EM) {
-      if(e.physics && e.render) {
-        auto &phy = (*e.physics).pos;
-        auto &ren = (*e.render).pos;
-
-        ren.x = uint32_t(std::round(phy.x));
-        ren.y = uint32_t(std::round(phy.y));
-      }
-    }
-  }
-
   // --------------------------------------------------------------------------
+  // Render
   // --------------------------------------------------------------------------
 
   RenderSystem::RenderSystem(const uint32_t w, const uint32_t h)
@@ -46,5 +34,23 @@ namespace rod {
     }
     ptc_update(screen_.data());
   }
+
+  // --------------------------------------------------------------------------
+  // PreRender
+  // --------------------------------------------------------------------------
+
+  void
+  PreRenderSystem::update(EntityManager& EM) {
+    for (Entity& e : EM) {
+      if(e.physics && e.render) {
+        auto &phy = (*e.physics).pos;
+        auto &ren = (*e.render).pos;
+
+        ren.x = uint32_t(std::round(phy.x));
+        ren.y = uint32_t(std::round(phy.y));
+      }
+    }
+  }
+
 }
 
