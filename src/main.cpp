@@ -1,4 +1,3 @@
-#include "cmp/behaviour.hpp"
 extern "C" {
 #include <tinyPTC/tinyptc.h>
 }
@@ -33,20 +32,26 @@ int main()
 
   uage::Clock clock;
 
-  auto& e1 = EM.createEntity();
-  e1.physics = rod::PhysicsComponent{.pos{10, 40}, .vel{0.f, 5.f}};
-  e1.render  = rod::RenderComponent{.sprite{{4, 4}, 0x000000FF}};
-  e1.beh_cmp = rod::BehaviourComponent{
-    .behaviour{std::make_unique<rod::BehaviourChangeVY>()
-  }};
+  // auto& e1 = EM.createEntity();
+  // e1.physics = rod::PhysicsComponent{.pos{10, 40}, .vel{0.f, 5.f}};
+  // e1.render  = rod::RenderComponent{.sprite{{4, 4}, 0x000000FF}};
+  // e1.beh_cmp = rod::BehaviourComponent{
+  //   .behaviour{std::make_unique<rod::BehaviourChangeVY>()
+  // }};
 
   auto& e2 = EM.createEntity();
-  e2.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{0, 0}};
-  e2.render  = rod::RenderComponent{.sprite{{8, 8}, 0x000000FF}};
+  e2.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{1, 0}};
+  auto s = uage::Sprite{};
+  s.load_from_file("assets/img/image3.png");
 
-  auto& e3 = EM.createEntity();
-  e3.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{1.f, 0}};
-  e3.render  = rod::RenderComponent{.sprite{{8, 8}, 0x00FF00FF}};
+  e2.render  = rod::RenderComponent{.sprite{s}};
+  // e1.beh_cmp = rod::BehaviourComponent{
+  //   .behaviour{std::make_unique<rod::BehaviourChangeVY>()
+  // }};
+
+  // auto& e3 = EM.createEntity();
+  // e3.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{1.f, 0}};
+  // e3.render  = rod::RenderComponent{.sprite{{8, 8}, 0x00FF00FF}};
 
   while( ! ptc_process_events())
   {
