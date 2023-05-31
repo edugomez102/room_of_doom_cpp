@@ -24,6 +24,8 @@ namespace uage {
     void drawSprite(const Sprite& sprite, const Vec2D& position);
     // void drawSprite(const uint32_t* sparr, const Vec2D& position);
 
+    auto begin() { return data_.begin(); }
+    auto end()   { return data_.end();   }
 
   private:
     Dimensions2D const dim_{};
