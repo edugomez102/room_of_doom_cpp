@@ -46,8 +46,8 @@ namespace rod {
         auto &phy = (*e.physics).pos;
         auto &ren = (*e.render).pos;
 
-        ren.x = uint32_t(std::round(phy.x));
-        ren.y = uint32_t(std::round(phy.y));
+        ren.x = int32_t(std::round(phy.x));
+        ren.y = int32_t(std::round(phy.y));
       }
     }
   }

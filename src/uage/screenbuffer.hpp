@@ -9,6 +9,10 @@ namespace uage {
 
   struct ScreenBuffer {
 
+    struct ClippedRect {
+      Rect2D screen{}, sprite{};
+    };
+
     explicit ScreenBuffer(const uint32_t w, const uint32_t h);
 
     [[nodiscard]] auto data() noexcept {return data_.data(); };
@@ -17,12 +21,12 @@ namespace uage {
 
     // TODO draw sprite when is not entiriely on screen
     // calculateSpriteClipping()
+    ClippedRect calculateSpriteClipping(const Sprite& sprite, const Vec2D& screenPosition);
 
 
     // ARGB
     void fill(const uint32_t hexColor);
     void drawSprite(const Sprite& sprite, const Vec2D& position);
-    // void drawSprite(const uint32_t* sparr, const Vec2D& position);
 
     auto begin() { return data_.begin(); }
     auto end()   { return data_.end();   }

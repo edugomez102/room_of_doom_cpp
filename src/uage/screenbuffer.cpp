@@ -37,9 +37,20 @@ namespace uage {
   // --------------------------------------------------------------------------
   // --------------------------------------------------------------------------
 
+  ScreenBuffer::ClippedRect calculateSpriteClipping(const Sprite& sprite, const Vec2D& screenPosition)
+  {
+    return ScreenBuffer::ClippedRect{};
+  }
+
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
   void ScreenBuffer::drawSprite(const Sprite& sprite, const Vec2D& position)
   {
-    if(position.x > dim_.w || position.y > dim_.h) return; // TODO
+    if(position.x + sprite.dim().w > dim_.w ||
+       position.y + sprite.dim().h > dim_.h ||
+       position.x < 0 || position.y < 0)
+      return; // TODO
 
     auto spdim = sprite.dim();
     const uint32_t* psp = sprite.data();

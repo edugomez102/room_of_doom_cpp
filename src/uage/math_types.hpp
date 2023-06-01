@@ -13,7 +13,7 @@ namespace uage {
   };
 
   // default
-  using Vec2D  = Vec2D_t<uint32_t>;
+  using Vec2D  = Vec2D_t<int32_t>;
   using Vec2Df = Vec2D_t<float>;
 
   struct Dimensions2D {
@@ -23,12 +23,11 @@ namespace uage {
 
   };
 
-
   struct Rect2D {
-    Vec2D pos{};
-    Dimensions2D dim{};
 
-    // bool operator<=>(const Rect2D&) const noexcept = default;
+    int32_t left{}, right{};
+    int32_t up{}, down{};
+    bool operator<=>(const Rect2D&) const noexcept = default;
 
   };
 
