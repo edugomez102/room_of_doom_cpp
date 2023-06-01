@@ -71,7 +71,7 @@ $(OBJ)/%.o : $(SRC)/%.cpp
 	$(CC) -o $@ -c $^ $(CCFLAGS) $(INCLUDE)
 
 $(TEST_OBJ)/%.o: $(TEST_SRC)/%.cpp
-	$(CC) -o $@ -c $^ $(CCFLAGS) -Isrc
+	$(CC) -o $@ -c $^ $(CCFLAGS) -Isrc -Isrc/lib
 
 $(TEST_APP) : $(OBJSUBDIRS) $(TEST_OBJS)
 	$(CC) -o $(TEST_APP) $(TEST_OBJS) $(TEST_SRC_CPPOBJS) $(ALLCSOBJS) $(LIBS)
