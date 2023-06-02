@@ -31,10 +31,12 @@ namespace rod {
 
     auto& e2 = EM.createEntity();
     e2.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{0, 0}};
-    e2.input = rod::InputComponent{.impulse = 8};
-    auto s = uage::Sprite{};
-    s.load_from_file("assets/img/sprite_sheet_01.png");
-    e2.render  = rod::RenderComponent{.sprite{s}};
+    e2.input = rod::InputComponent{.impulse = 4};
+    // auto s = uage::Sprite{"assets/img/sprite_sheet_01.png"};
+    // auto s = uage::Sprite{{4, 4}, 0x00FFFF00};
+    // e2.render  = rod::RenderComponent{.sprite{s}};
+
+    e2.render  = rod::RenderComponent{uage::Sprite{"assets/img/sprite_sheet_01.png"}};
 
   }
 }

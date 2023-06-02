@@ -11,6 +11,9 @@ namespace uage {
   {
   }
 
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
   Sprite::Sprite(const std::filesystem::path& path)
   {
     load_from_file(path);
@@ -24,7 +27,9 @@ namespace uage {
     return Sprite{};
   }
 
-  // TODO: wrong color order in array
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
   void Sprite::load_from_file(std::filesystem::path p)
   {
     std::vector<uint8_t> pixels{};
@@ -39,12 +44,25 @@ namespace uage {
     );
 
     decodePNG(pixels, dw, dh, filevec.data(), filevec.size());
-
     data_.resize(pixels.size() / 4 );
+    swap_RGBA_to_ARGB(pixels);
+
     std::memcpy(data_.data(), pixels.data(), pixels.size());
 
     dim_.w = uint32_t(dw);
     dim_.h = uint32_t(dh);
 
+  }
+
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
+  void Sprite::swap_RGBA_to_ARGB(std::vector<uint8_t>& pixels)
+  {
+    for (size_t i = 0; i < pixels.size(); i += 4) {
+      uint8_t temp = pixels[i];        // Store red channel temporarily
+      pixels[i] = pixels[i + 2];       // Assign blue channel to red channel position
+      pixels[i + 2] = temp;            // Assign stored red channel to blue channel position
+    }
   }
 }

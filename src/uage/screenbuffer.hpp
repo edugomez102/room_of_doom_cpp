@@ -32,6 +32,7 @@ namespace uage {
     auto end()   { return data_.end();   }
 
   private:
+
     Dimensions2D const dim_{};
     std::vector<uint32_t> data_{ std::vector<uint32_t>(dim_.size(), 0) };
   };
