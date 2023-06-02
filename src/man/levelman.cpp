@@ -1,5 +1,12 @@
 #include "levelman.hpp"
 
+  constexpr uint32_t sphex[4 * 4] = {
+    0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+    0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+    0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+    0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000,
+  };
+
 namespace rod {
 
   void LevelManager::createShot(const uage::Vec2Df pos, const uage::Vec2Df vel){
@@ -35,8 +42,14 @@ namespace rod {
     // auto s = uage::Sprite{"assets/img/sprite_sheet_01.png"};
     // auto s = uage::Sprite{{4, 4}, 0x00FFFF00};
     // e2.render  = rod::RenderComponent{.sprite{s}};
+    // auto s = uage::Sprite{"assets/img/sprite_sheet_01.png"};
 
-    e2.render  = rod::RenderComponent{uage::Sprite{"assets/img/sprite_sheet_01.png"}};
+    // e2.render  = rod::RenderComponent{uage::Sprite{"assets/img/sprite_sheet_01.png"}};
+
+    auto s = uage::Sprite{"assets/img/sprite_sheet_01.png"};
+    // auto sub = s.new_subsprite({{32,16},{16,16}});
+    auto sub = s.new_subsprite({{0,0},{16,32}});
+    e2.render  = rod::RenderComponent{sub};
 
   }
 }

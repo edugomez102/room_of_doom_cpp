@@ -8,8 +8,7 @@ namespace uage {
   Sprite::Sprite(Dimensions2D dim, uint32_t color)
     : dim_{dim}
     , data_{std::vector<uint32_t>(dim.size(), color)}
-  {
-  }
+  {}
 
   // --------------------------------------------------------------------------
   // --------------------------------------------------------------------------
@@ -24,7 +23,23 @@ namespace uage {
 
   Sprite Sprite::new_subsprite(Rect2D rect) 
   {
-    return Sprite{};
+    // TODO control if out of sprite
+    Sprite subsprite = Sprite{rect.dim, 0};
+
+    const uint32_t* p_sprite = data_.data() + rect.pos.x + (uint32_t(rect.pos.y) * dim_.w);
+    uint32_t* p_subsprite = subsprite.data_.data();
+
+    for (uint32_t i = 0; i < subsprite.dim_.h; ++i) {
+      std::copy(
+        p_sprite,
+        p_sprite + subsprite.dim_.w,
+        p_subsprite
+      );
+      p_subsprite += subsprite.dim_.w;
+      p_sprite += dim_.w;
+    }
+
+    return subsprite;
   }
 
   // --------------------------------------------------------------------------
