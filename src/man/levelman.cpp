@@ -10,4 +10,31 @@ namespace rod {
       std::make_unique<rod::BehaviourAutodestroy>(60)
     };
   }
+
+  void LevelManager::startTestLevel()
+  {
+    auto& EM = EM_;
+
+    auto& e1 = EM.createEntity();
+    e1.physics = rod::PhysicsComponent{.pos{32, 24}, .vel{0.f, 0.f}};
+    e1.render  = rod::RenderComponent{.sprite{{16, 8}, 0x000000FF}};
+    e1.beh_cmp = rod::BehaviourComponent{
+      .behaviour{std::make_unique<rod::BehaviourShootFreq>(60)
+    }};
+
+    // auto& e3 = EM.createEntity();
+    // e3.physics = rod::PhysicsComponent{.pos{9, 40}, .vel{2.f, 0.f}};
+    // e3.render  = rod::RenderComponent{.sprite{{16, 8}, 0x0000AAFF}};
+    // e3.beh_cmp = rod::BehaviourComponent{
+    //   .behaviour{std::make_unique<rod::BehaviourBounce>()
+    // }};
+
+    auto& e2 = EM.createEntity();
+    e2.physics = rod::PhysicsComponent{.pos{20, 40}, .vel{0, 0}};
+    e2.input = rod::InputComponent{.impulse = 8};
+    auto s = uage::Sprite{};
+    s.load_from_file("assets/img/sprite_sheet_01.png");
+    e2.render  = rod::RenderComponent{.sprite{s}};
+
+  }
 }

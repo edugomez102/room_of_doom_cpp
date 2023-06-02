@@ -11,8 +11,18 @@ namespace uage {
   {
   }
 
+  Sprite::Sprite(const std::filesystem::path& path)
+  {
+    load_from_file(path);
+  }
+
   // --------------------------------------------------------------------------
   // --------------------------------------------------------------------------
+
+  Sprite Sprite::new_subsprite(Rect2D rect) 
+  {
+    return Sprite{};
+  }
 
   // TODO: wrong color order in array
   void Sprite::load_from_file(std::filesystem::path p)

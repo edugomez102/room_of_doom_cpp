@@ -12,10 +12,12 @@ namespace uage {
 
     Sprite() = default;
     Sprite(Dimensions2D dim, uint32_t color);
+    Sprite(const std::filesystem::path& path);
 
     // TODO
     void load_from_file(std::filesystem::path p);
-    // Sprite new_subsprite(Rect2D const& rect);
+
+    Sprite new_subsprite(Rect2D rect);
 
     Dimensions2D const dim() const { return dim_; }
     auto data() const { return data_.data(); }
