@@ -15,5 +15,9 @@ namespace rod {
     std::optional<PhysicsComponent>   physics{};
     std::optional<BehaviourComponent> beh_cmp{};
     std::optional<InputComponent>     input{};
+
+    void markForDestruction() { alive = false; }
+
+    bool alive{true};
   };
 }

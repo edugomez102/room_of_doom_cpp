@@ -5,21 +5,44 @@
 
 namespace rod {
   struct Entity;
+  struct LevelManager;
 
   struct Behaviour{
-    virtual void run(rod::Entity& e) = 0;
+    virtual void run(rod::Entity& e, LevelManager& LevMan) = 0;
     virtual ~Behaviour() = default;
   };
 
   struct BehaviourBounce: Behaviour{
-    void run(rod::Entity& e) final;
+    void run(rod::Entity& e, LevelManager& LevMan) final;
   };
 
   struct BehaviourChangeVY: Behaviour{
-    void run(rod::Entity& e) final; 
+    explicit BehaviourChangeVY(const uint32_t ic)
+      :initial_count{ic} {}
+
+    void run(rod::Entity& e, LevelManager& LevMan) final; 
 
     uint32_t initial_count{60};
     uint32_t counter{initial_count};
+
+  };
+
+  struct BehaviourShootFreq: Behaviour{
+    explicit BehaviourShootFreq(const uint32_t ic)
+      :initial_count{ic} {}
+    void run(rod::Entity& e, LevelManager& LevMan) final; 
+
+    uint32_t initial_count{60};
+    uint32_t counter{initial_count};
+
+  };
+
+  struct BehaviourAutodestroy: Behaviour{
+    explicit BehaviourAutodestroy(const uint32_t c)
+      :counter{c} {}
+    void run(rod::Entity& e, LevelManager& LevMan) final; 
+
+    uint32_t counter{60};
 
   };
 

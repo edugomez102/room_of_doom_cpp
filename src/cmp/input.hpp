@@ -3,7 +3,7 @@
 #include <X11/X.h>
 #include <X11/keysym.h>
 
-
+// TODO: input manager
 namespace rod {
 
   struct InputComponent{

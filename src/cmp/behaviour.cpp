@@ -1,9 +1,11 @@
 #include "behaviour.hpp"
 #include "entity.hpp"
+#include <man/levelman.hpp>
 
 namespace rod {
 
-  void BehaviourBounce::run(rod::Entity& e) {
+  void 
+  BehaviourBounce::run(rod::Entity& e, LevelManager&) {
     if (e.physics) {
       auto& phy = *e.physics;
 
@@ -14,15 +16,46 @@ namespace rod {
     }
   }
 
-  void BehaviourChangeVY::run(rod::Entity& e){
+  // ---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
+
+  void 
+  BehaviourChangeVY::run(rod::Entity& e, LevelManager&){
+
     if(e.physics){
       auto& phy = *e.physics;
-      if(counter == 0)
+      if(counter-- == 0)
       {
         phy.vel.y = - phy.vel.y;
         counter = initial_count;
       }
-      else --counter;
+    }
+  };
+  
+  // ---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
+
+  void 
+  BehaviourShootFreq::run(rod::Entity& e, LevelManager& LevMan){
+    if(e.physics){
+      auto& phy = *e.physics;
+      if(counter-- == 0)
+      {
+        LevMan.createShot(phy.pos, {4.f, 0});
+        counter = initial_count;
+      }
+    }
+  };
+
+  // ---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
+
+  void 
+  BehaviourAutodestroy::run(rod::Entity& e, LevelManager&){
+    if(counter-- == 0)
+    {
+      // LevMan.createShot(phy.pos, {4.f, 0});
+      e.markForDestruction();
     }
   };
 

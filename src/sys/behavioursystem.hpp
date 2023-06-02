@@ -4,15 +4,14 @@
 
 namespace rod {
 
-  // struct EntityManager;
-  // struct Entity;
+  struct LevelManager;
 
   struct BehaviourSystem {
-    void update(EntityManager& EM); 
+    void update(LevelManager& EM); 
 
   private:
     void behaviour_bounce(Entity& e);
-  };
 
+  };
 }
 
