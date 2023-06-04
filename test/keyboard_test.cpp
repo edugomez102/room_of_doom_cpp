@@ -1,4 +1,4 @@
-#include <lib/ut/ut.hpp>
+#include <ut/ut.hpp>
 #include <uage/keyboard.hpp>
 
 namespace ut = boost::ut;

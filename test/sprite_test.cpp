@@ -1,4 +1,4 @@
-#include <lib/ut/ut.hpp>
+#include <ut/ut.hpp>
 #include <uage/sprite.hpp>
 
 namespace ut = boost::ut;

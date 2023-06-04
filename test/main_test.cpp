@@ -1,4 +1,4 @@
-#include <lib/ut/ut.hpp>
+#include <ut/ut.hpp>
 
 #include <uage/math_types.hpp>
 

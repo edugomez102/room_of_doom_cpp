@@ -1,5 +1,5 @@
 #include "uage/sprite.hpp"
-#include <lib/ut/ut.hpp>
+#include <ut/ut.hpp>
 
 #include <uage/screenbuffer.hpp>
 

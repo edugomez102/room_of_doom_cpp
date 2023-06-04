@@ -1,7 +1,7 @@
 #pragma once 
 
 extern "C" {
-#include "tinyPTC/tinyptc.h"
+#include <tinyPTC/tinyptc.h>
 }
 #include <uage/macros.h>
 #include <uage/screenbuffer.hpp>
