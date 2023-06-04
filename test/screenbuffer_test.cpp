@@ -11,14 +11,13 @@ ut::suite<"uage::ScreenBuffer"> screenbuf = []
   using namespace boost::ut::literals;
   using namespace boost::ut::spec;
 
-
   "screen dim"_test = [&] {
     auto screen = uage::ScreenBuffer{4, 4};
     expect(screen.dim().size() == 16);
   };
 
-  const auto screen_fill = 0xFFFFFFFF;
-  const auto sp_color = 0xFFAAAAAA;
+  constexpr auto screen_fill = 0xFFFFFFFF;
+  constexpr auto sp_color    = 0xFFAAAAAA;
 
   it("should fill the screen") = [&] {
     auto screen = uage::ScreenBuffer{2, 2};
@@ -48,6 +47,16 @@ ut::suite<"uage::ScreenBuffer"> screenbuf = []
           && screen.data()[3] == screen_fill);
     };
     screen.fill(0);
+
+    it("should paint nothing") = [&] {
+      auto sp = uage::Sprite{};
+      screen.drawSprite(sp, {0, 0});
+
+      expect(screen.data()[0] == 0
+          && screen.data()[1] == 0
+          && screen.data()[2] == 0
+          && screen.data()[3] == 0);
+    };
 
     //   |x|x|
     //   |x|x|

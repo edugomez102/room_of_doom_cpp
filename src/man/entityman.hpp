@@ -48,7 +48,13 @@ namespace uage {
       }
     }
 
-    std::vector<ET> entities_{}, new_entities_;
+    std::vector<ET> entities_{}, new_entities_{};
+
+#ifndef RELEASE
+  public:
+
+    ET& getEntity() { return entities_.at(0); }
+#endif
 
   };
 

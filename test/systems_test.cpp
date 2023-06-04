@@ -15,28 +15,42 @@ ut::suite<"Game Systems"> phy_test = []
 
   describe("Physiscs system") = [] {
 
-    rod::EntityManager EM{1};
+    rod::EntityManager EM{2};
     rod::PhysicsSystem PhySys{};
 
-    auto& e1 = EM.createEntity();
-    e1.physics = rod::PhysicsComponent{.pos{0, 0}, .vel{1.f, 0.f}};
-    auto& pos = e1.physics->pos;
-    auto& vel = e1.physics->vel;
+    auto& e_create = EM.createEntity();
+    e_create.physics = rod::PhysicsComponent{.pos{0.f, 0.f}, .vel{1.f, 0.f}};
 
     it("should start at pos 0, 0") = [&] {
-      expect(pos.x == 0 && pos.y == 0);
-      expect(vel.x == 1.f && vel.y == 0.f);
+      EM.update();
+
+      auto& e = EM.getEntity();
+      auto& phy = (*e.physics);
+
+      expect(phy.pos.x == 0.f && phy.pos.y == 0.f);
+      expect(phy.vel.x == 1.f && phy.vel.y == 0.f);
     };
 
     it("should be at pos 1, 0 after update") = [&] {
+      EM.update();
       PhySys.update(EM);
-      expect(pos.x == 1 && pos.y == 0);
+
+      auto& e = EM.getEntity();
+      auto& phy = (*e.physics);
+
+      expect(phy.pos.x == 1.f && phy.pos.y == 0.f);
     };
 
-    it("should return to pos 0, 0") = [&] {
-      vel.x = -1.f;
+    it("should return to pos 0, 0 after update") = [&] {
+      auto& e = EM.getEntity();
+      auto& phy = (*e.physics);
+
+      phy.vel.x = -1.f;
+
+      EM.update();
       PhySys.update(EM);
-      expect(pos.x == 0 && pos.y == 0);
+
+      expect(phy.pos.x == 0.f && phy.pos.y == 0.f);
     };
   };
 
