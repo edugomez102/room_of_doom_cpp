@@ -13,10 +13,9 @@ namespace rod {
 
     explicit SpriteManager(const std::filesystem::path& path)
       :spritesheet_{path}
-    {
-    }
+    {}
 
-    // uage::Sprite createSprite(SpriteType spt);
+    uage::Sprite createSprite(SpriteType spt);
 
     private:
       uage::Sprite spritesheet_{};

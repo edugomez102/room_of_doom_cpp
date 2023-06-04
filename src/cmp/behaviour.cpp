@@ -52,11 +52,7 @@ namespace rod {
 
   void 
   BehaviourAutodestroy::run(rod::Entity& e, LevelManager&){
-    if(counter-- == 0)
-    {
-      // LevMan.createShot(phy.pos, {4.f, 0});
-      e.markForDestruction();
-    }
+    if(counter-- == 0) e.markForDestruction();
   };
 
 }

@@ -18,7 +18,7 @@ namespace rod {
     
     private:
       EntityManager EM_{10};
-      // SpriteManager SM_{};
-      // TODO sprite man
+      // TODO optional path
+      SpriteManager SM_{"assets/img/sprite_sheet_01.png"};
   };
 }
