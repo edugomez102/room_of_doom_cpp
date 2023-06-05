@@ -2,6 +2,7 @@
 workspace "room_of_doom"
   configurations { "Debug", "Release"}
 
+
 project "tinyPTC"
   kind "StaticLib"
   language("C")
@@ -15,15 +16,16 @@ project "picoPNG"
 project "lua5"
   kind "StaticLib"
   language("C")
-  files{"lib/lua-5.4.6/**.h", "lib/lua-5.4.6/**.c"}
+  files{"lib/lua/**.h", "lib/lua/**.c"}
 
-project "game"
-  kind "ConsoleApp"
+project "shared"
+  kind "StaticLib"
   language("C++")
   cppdialect "C++20"
   targetdir "bin/%{cfg.buildcfg}"
 
   files{"src/**.hpp", "src/**.cpp"}
+  removefiles{"src/main.cpp"}
   includedirs { 
     "src",
     "lib"
@@ -34,9 +36,35 @@ project "game"
   filter "configurations:Debug"
     defines { "DEBUG" }
     symbols "On"
+    buildoptions {"-Wall -Wpedantic -Wextra -Wconversion"}
 
   filter "configurations:Release"
-    defines { "NDEBUG" }
+    defines { "RELEASE" }
+    optimize "On"
+
+
+project "game"
+  kind "ConsoleApp"
+  language("C++")
+  cppdialect "C++20"
+  targetdir "bin/%{cfg.buildcfg}"
+
+  files{"src/main.cpp"}
+
+  includedirs { 
+    "src",
+    "lib"
+  }
+  libdirs {"lib"}
+  links {"shared", "tinyPTC", "picoPNG", "X11", "lua5"}
+
+  filter "configurations:Debug"
+    defines { "DEBUG" }
+    symbols "On"
+    buildoptions {"-Wall -Wpedantic -Wextra -Wconversion"}
+
+  filter "configurations:Release"
+    defines { "RELEASE" }
     optimize "On"
 
 
@@ -47,13 +75,31 @@ project "test"
   cppdialect "C++20"
 
   files{"test/**.h", "test/**.cpp"}
-  files{"src/**.hpp", "src/**.cpp"}
-  removefiles{"src/main.cpp"}
 
   includedirs {
     "src",
     "lib"
   }
-  links {"tinyPTC", "picoPNG", "X11", "lua5"}
+  libdirs {"lib"}
+  links {"shared", "tinyPTC", "picoPNG", "X11", "lua5"}
 
+  postbuildcommands {
+    "bin/%{cfg.buildcfg}/test"
+  }
+
+  filter "configurations:Debug"
+    defines { "DEBUG" }
+    symbols "On"
+    buildoptions {"-Wall -Wpedantic -Wextra -Wconversion"}
+
+  filter "configurations:Release"
+    defines { "RELEASE" }
+    optimize "On"
+
+project "clean_shared"
+  kind "Makefile"
+  targetname "clean_shared"
+  buildcommands {
+      "@${MAKE} --no-print-directory -C . -f shared.make clean"
+  }
 
