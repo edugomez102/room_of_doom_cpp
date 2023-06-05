@@ -36,7 +36,10 @@ jobs:
         rm -Rf premake-build
 
     - name: Generate build files
-      run: premake5 gmake
+      run: | 
+        ls
+        make --version
+        ./premake5 gmake
 
     - name: Build
       run: make game
