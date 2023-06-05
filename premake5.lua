@@ -17,6 +17,7 @@ project "lua5"
   kind "StaticLib"
   language("C")
   files{"lib/lua/**.h", "lib/lua/**.c"}
+  removefiles{"lib/lua/testes/**"}
 
 project "shared"
   kind "StaticLib"
