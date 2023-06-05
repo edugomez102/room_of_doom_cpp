@@ -12,14 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repo and submodules
+      uses: actions/checkout@v3
       with:
         lfs: 'true'
+        submodules: recursive
     
-    - name: Install depenencies
-      run: sudo apt-get install libx11-dev libxext-dev libxv-dev libxrender-dev
+    - name: Install dependencies
+      run: sudo apt-get install libx11-dev libxext-dev libxv-dev libxrender-dev premake
 
-    - name: build
+    - name: Generate build files
+      run: premake5 gmake
+
+    - name: Build
       run: make game
 
     - name: Run test
@@ -29,6 +34,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: game-bin
-        path: game
+        path: bin/Debug/game
         retention-days: 1
 
