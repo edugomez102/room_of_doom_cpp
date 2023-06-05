@@ -24,8 +24,8 @@ jobs:
     - name: checkout premake5
       uses: actions/checkout@v3
       with:
-          repository: premake/premake-core
-          path: premake-build
+        repository: premake/premake-core
+        path: premake-build
 
     - name: Build premake5
       run: |
@@ -33,7 +33,7 @@ jobs:
         make -f Bootstrap.mak linux CONFIG=release
         cp bin/release/premake5 ../
         cd ..
-      rm -Rf premake-build
+        rm -Rf premake-build
 
     - name: Generate build files
       run: premake5 gmake
