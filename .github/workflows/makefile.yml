@@ -19,7 +19,21 @@ jobs:
         submodules: recursive
     
     - name: Install dependencies
-      run: sudo apt-get install libx11-dev libxext-dev libxv-dev libxrender-dev premake
+      run: sudo apt-get install libx11-dev libxext-dev libxv-dev libxrender-dev
+
+    - name: checkout premake5
+      uses: actions/checkout@v3
+      with:
+          repository: premake/premake-core
+          path: premake-build
+
+    - name: Build premake5
+      run: |
+        cd premake-build
+        make -f Bootstrap.mak linux CONFIG=release
+        cp bin/release/premake5 ../
+        cd ..
+      rm -Rf premake-build
 
     - name: Generate build files
       run: premake5 gmake
