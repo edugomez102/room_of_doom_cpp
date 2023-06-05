@@ -46,7 +46,6 @@ namespace rod {
 
     // e2.render  = rod::RenderComponent{uage::Sprite{"assets/img/sprite_sheet_01.png"}};
 
-    auto s = uage::Sprite{"assets/img/sprite_sheet_01.png"};
     // auto sub = s.new_subsprite({{32,16},{16,16}});
     // auto sub = s.new_subsprite({{0,0},{16,32}});
     auto sub = SM_.createSprite(SpriteType::Player);

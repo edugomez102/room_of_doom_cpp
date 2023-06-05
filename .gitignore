@@ -1,5 +1,7 @@
 
 obj/
+bin/
+*.make
 compile_commands.json
 *gch
 game
