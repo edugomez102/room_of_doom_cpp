@@ -3,6 +3,7 @@
 #include <uage/math_types.hpp>
 #include <sys/physiscssystem.hpp>
 #include <sys/rendersystem.hpp>
+#include <man/levelman.hpp>
 #include <types.hpp>
 
 namespace ut = boost::ut;
@@ -15,7 +16,8 @@ ut::suite<"Game Systems"> phy_test = []
 
   describe("Physiscs system") = [] {
 
-    rod::EntityManager EM{2};
+    rod::LevelManager LevMan{2};
+    auto& EM = LevMan.EntMan();
     rod::PhysicsSystem PhySys{};
 
     auto& e_create = EM.createEntity();
@@ -33,7 +35,7 @@ ut::suite<"Game Systems"> phy_test = []
 
     it("should be at pos 1, 0 after update") = [&] {
       EM.update();
-      PhySys.update(EM);
+      PhySys.update(LevMan);
 
       auto& e = EM.getEntity();
       auto& phy = (*e.physics);
@@ -48,7 +50,7 @@ ut::suite<"Game Systems"> phy_test = []
       phy.vel.x = -1.f;
 
       EM.update();
-      PhySys.update(EM);
+      PhySys.update(LevMan);
 
       expect(phy.pos.x == 0.f && phy.pos.y == 0.f);
     };

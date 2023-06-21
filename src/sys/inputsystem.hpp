@@ -6,13 +6,16 @@
 namespace rod {
 
   struct InputSystem{
-    explicit InputSystem();
+    InputSystem();
 
-    void update(EntityManager& EM) const;
+    void update(LevelManager& LevMan);
 
-    private:
+  private:
 
     inline static uage::Keyboard kb_{};
+
+    // using tinyptc, this should be called after window init
+    static void bindKeyboard();
 
     static void onKeypress(KeySym k)   { kb_.keyPressed(k);  }
     static void onKeyrelease(KeySym k) { kb_.keyReleased(k); }

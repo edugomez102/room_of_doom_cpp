@@ -10,6 +10,11 @@ namespace rod {
   using EntityManager = uage::EntityManager<Entity>;
 
   struct LevelManager {
+
+    LevelManager() = default;
+
+    LevelManager(size_t storage, SpriteManager spriteman);
+
     EntityManager& EntMan() { return EM_;}
 
     void createShot(const uage::Vec2Df pos, const uage::Vec2Df vel);
@@ -18,7 +23,8 @@ namespace rod {
     
     private:
       EntityManager EM_{10};
+
       // TODO optional path
-      SpriteManager SM_{"assets/img/sprite_sheet_01.png"};
+      SpriteManager SprM_{"assets/img/sprite_sheet_01.png"};
   };
 }

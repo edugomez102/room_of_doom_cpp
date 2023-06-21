@@ -1,6 +1,6 @@
 #include "rendersystem.hpp"
 #include <cmath>
-#include <cwchar>
+#include <man/levelman.hpp>
 
 namespace rod {
 
@@ -8,8 +8,17 @@ namespace rod {
   // Render
   // --------------------------------------------------------------------------
 
+  RenderSystem::RenderSystem()
+    : screen_{d_w, d_h}
+  {
+    ptc_open("window", int(d_w), int(d_h));
+  }
+
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
   RenderSystem::RenderSystem(const uint32_t w, const uint32_t h)
-      : screen_{w, h}
+    : screen_{w, h}
   {
     ptc_open("window", int(w), int(h));
   }
@@ -25,7 +34,8 @@ namespace rod {
   // --------------------------------------------------------------------------
 
   void 
-  RenderSystem::update(EntityManager& EM) {
+  RenderSystem::update(LevelManager& LevMan) {
+    auto& EM = LevMan.EntMan();
     screen_.fill(0);
     for (Entity& e : EM) {
       if(e.render){
@@ -40,7 +50,8 @@ namespace rod {
   // --------------------------------------------------------------------------
 
   void
-  PreRenderSystem::update(EntityManager& EM) {
+  PreRenderSystem::update(LevelManager& LevMan) {
+    auto& EM = LevMan.EntMan();
     for (Entity& e : EM) {
       if(e.physics && e.render) {
         auto &phy = (*e.physics).pos;

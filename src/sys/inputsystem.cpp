@@ -1,4 +1,6 @@
 #include "inputsystem.hpp"
+#include <iostream>
+#include <man/levelman.hpp>
 extern "C" {
 #include <tinyPTC/tinyptc.h>
 }
@@ -7,13 +9,16 @@ namespace rod {
 
   InputSystem::InputSystem() 
   {
-    ptc_set_on_keypress(onKeypress);
-    ptc_set_on_keyrelease(onKeyrelease);
+    bindKeyboard();
   }
 
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
   void 
-  InputSystem::update(EntityManager& EM) const {
+  InputSystem::update(LevelManager& LevMan) {
     ptc_process_events();
+    auto& EM = LevMan.EntMan();
 
     for (auto& e : EM) {
       if(e.input && e.physics){
@@ -28,4 +33,15 @@ namespace rod {
       }
     }
   }
+
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
+  void 
+  InputSystem::bindKeyboard()
+  {
+    ptc_set_on_keypress(onKeypress);
+    ptc_set_on_keyrelease(onKeyrelease);
+  }
+
 }

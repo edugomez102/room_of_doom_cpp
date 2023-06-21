@@ -20,21 +20,22 @@ extern "C" {
 #include <sys/behavioursystem.hpp>
 #include <sys/inputsystem.hpp>
 
-#include <uage/clock.hpp>
+#include <man/systemman.hpp>
 
-constexpr uint32_t w = 640;
-constexpr uint32_t h = 456;
+#include <uage/clock.hpp>
 
 int main()
 {
   rod::LevelManager LevMan{};
-  rod::PhysicsSystem PhySys{};
-  rod::RenderSystem  RenSys{w, h};
-  rod::PreRenderSystem PreRenSys{};
-  rod::BehaviourSystem BehSys{};
-  rod::InputSystem InpSys{};
-
   auto& EM = LevMan.EntMan();
+
+  auto SM = rod::SystemManager<
+    rod::InputSystem,
+    rod::BehaviourSystem,
+    rod::PhysicsSystem,
+    rod::PreRenderSystem,
+    rod::RenderSystem
+  >{};
 
   LevMan.startTestLevel();
 
@@ -44,14 +45,7 @@ int main()
   {
     clock.new_frame();
 
-    // TODO: sysman CRTP
-    PreRenSys.update(EM);
-    RenSys.update(EM);
-
-    InpSys.update(EM);
-    BehSys.update(LevMan);
-    PhySys.update(EM);
-
+    SM.update(LevMan);
     EM.update();
 
     while(clock.is_waiting());

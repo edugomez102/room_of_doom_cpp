@@ -9,6 +9,13 @@
 
 namespace rod {
 
+  LevelManager::LevelManager(size_t storage, SpriteManager spriteman)
+    : EM_{storage}, SprM_{spriteman}
+  {}
+
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+
   void LevelManager::createShot(const uage::Vec2Df pos, const uage::Vec2Df vel){
     auto& e_shot = EM_.createEntity();
     e_shot.physics = rod::PhysicsComponent{.pos{pos}, .vel{vel}};
@@ -17,6 +24,9 @@ namespace rod {
       std::make_unique<rod::BehaviourAutodestroy>(60)
     };
   }
+
+  // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
   void LevelManager::startTestLevel()
   {
@@ -48,7 +58,7 @@ namespace rod {
 
     // auto sub = s.new_subsprite({{32,16},{16,16}});
     // auto sub = s.new_subsprite({{0,0},{16,32}});
-    auto sub = SM_.createSprite(SpriteType::Player);
+    auto sub = SprM_.createSprite(SpriteType::Player);
     e2.render  = rod::RenderComponent{sub};
 
   }

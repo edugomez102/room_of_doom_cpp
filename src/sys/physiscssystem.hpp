@@ -5,7 +5,7 @@
 namespace rod {
 
   struct PhysicsSystem {
-    void update(EntityManager& EM); 
+    void update(LevelManager& LevMan); 
 
   };
 
