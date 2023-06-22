@@ -13,7 +13,7 @@ namespace rod {
 
     LevelManager() = default;
 
-    LevelManager(size_t storage, SpriteManager spriteman);
+    LevelManager(size_t storage);
 
     EntityManager& EntMan() { return EM_;}
 

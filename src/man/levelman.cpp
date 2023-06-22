@@ -9,8 +9,8 @@
 
 namespace rod {
 
-  LevelManager::LevelManager(size_t storage, SpriteManager spriteman)
-    : EM_{storage}, SprM_{spriteman}
+  LevelManager::LevelManager(size_t storage)
+    : EM_{storage}
   {}
 
   // --------------------------------------------------------------------------
